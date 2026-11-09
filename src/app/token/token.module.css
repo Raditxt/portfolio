@@ -1,0 +1,53 @@
+.halaman {
+  display: grid;
+  gap: 32px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.bagian {
+  display: grid;
+  gap: 12px;
+}
+
+.kisi {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.swatch {
+  display: grid;
+  gap: 4px;
+  min-height: 72px;
+  align-content: end;
+  padding: 12px;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--shape-sm);
+}
+
+.kode {
+  font: 500 12px/16px var(--mono);
+}
+
+.bentuk {
+  display: grid;
+  place-items: center;
+  height: 72px;
+  background: var(--md-surface-container-high);
+  border: 1px solid var(--md-outline-variant);
+}
+
+.sl {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  height: 40px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: var(--shape-full);
+  font-family: var(--font);
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}

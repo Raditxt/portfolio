@@ -1,0 +1,61 @@
+:root {
+  /* palet */
+  --obsidian: #15131A;
+  --ash: #1E1B23;
+  --stone: #3B3733;
+  --olive: #4F5D3A;
+  --silver: #E8E4DA;
+  --gold: #C9A24A;
+  --violet: #7B5EA7;
+  --crimson: #A3312F;
+
+  /* turunan */
+  --gold-ink: #1E1606; /* asal: gold */
+  --violet-deep: #3E3157; /* asal: violet */
+  --violet-pale: #E3D6F5; /* asal: violet */
+  --crimson-deep: #4A1A19; /* asal: crimson */
+  --crimson-pale: #F6CFCB; /* asal: crimson */
+  --ash-2: #24212A; /* asal: ash */
+  --ash-3: #2C2832; /* asal: ash */
+  --ash-4: #36313D; /* asal: ash */
+  --silver-dim: #B8B1A6; /* asal: silver */
+  --stone-light: #7A746C; /* asal: stone */
+  --ash-line: #3C3842; /* asal: ash */
+  --black: #000; /* scrim, di luar palet */
+
+  /* role */
+  --md-primary: var(--gold);
+  --md-on-primary: var(--gold-ink);
+  --md-secondary-container: var(--olive);
+  --md-on-secondary-container: var(--silver);
+  --md-tertiary-container: var(--violet-deep);
+  --md-on-tertiary-container: var(--violet-pale);
+  --md-error-container: var(--crimson-deep);
+  --md-on-error-container: var(--crimson-pale);
+  --md-surface: var(--obsidian);
+  --md-surface-container-low: var(--ash);
+  --md-surface-container: var(--ash-2);
+  --md-surface-container-high: var(--ash-3);
+  --md-surface-container-highest: var(--ash-4);
+  --md-on-surface: var(--silver);
+  --md-on-surface-variant: var(--silver-dim);
+  --md-outline: var(--stone-light);
+  --md-outline-variant: var(--ash-line);
+  --md-scrim: var(--black);
+
+  /* font */
+  --font: var(--font-roboto-flex), "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: var(--font-roboto-mono), ui-monospace, Menlo, monospace;
+
+  /* shape */
+  --shape-xs: 4px;
+  --shape-sm: 8px;
+  --shape-md: 12px;
+  --shape-lg: 16px;
+  --shape-xl: 28px;
+  --shape-full: 999px;
+
+  /* easing */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+}
