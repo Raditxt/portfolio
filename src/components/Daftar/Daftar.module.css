@@ -1,0 +1,32 @@
+.daftar {
+  padding-block: calc(env(safe-area-inset-top, 0px) + 32px) 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+.isi {
+  max-width: 680px;
+  margin: 0 auto;
+  display: grid;
+  gap: 36px;
+}
+
+.isi section {
+  display: grid;
+  gap: 14px;
+}
+
+.judul {
+  margin: 0;
+  color: var(--md-primary);
+}
+
+.catatan {
+  border: 1px dashed var(--md-outline);
+  border-radius: var(--shape-md);
+  padding: 10px 14px;
+  color: var(--md-on-surface-variant);
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0;
+}
