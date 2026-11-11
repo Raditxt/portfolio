@@ -12,11 +12,13 @@ export const tentang: Tentang = {
         "D4 (Bachelor of Applied Science) in Computer and Network Engineering, Department of Informatics and Computer Engineering",
       periode: "Sep 2023 – Jul 2027",
       catatan: "GPA 3.64/4.00",
+      logo: "/logo/pnup.png",
     },
     {
       sekolah: "SMK Telkom Makassar",
       jurusan: "Computer and Network Engineering",
       periode: "Jul 2020 – May 2023",
+      logo: "/logo/smk-telkom-makassar.png",
     },
   ],
 };
