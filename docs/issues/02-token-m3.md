@@ -7,10 +7,10 @@ Palet datar dan color role M3 sebagai CSS variables, type scale Roboto Flex + Ro
 Belum ada komponen selain halaman contoh token.
 
 ## Kriteria selesai
-- [ ] Delapan warna palet persis sama dengan `docs/spec.md`
-- [ ] Color role M3 hanya merujuk ke var palet atau var turunan; `tokens.css` tidak punya hex di luar blok palet dan blok turunan
-- [ ] Tidak ada gradasi di CSS mana pun
-- [ ] Screenshot halaman token disimpan di `e2e`
+- [x] Delapan warna palet persis sama dengan `docs/spec.md`
+- [x] Color role M3 hanya merujuk ke var palet atau var turunan; `tokens.css` tidak punya hex di luar blok palet dan blok turunan
+- [x] Tidak ada gradasi di CSS mana pun
+- [x] Screenshot halaman token disimpan di `e2e`
 
 ## Catatan
 Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.

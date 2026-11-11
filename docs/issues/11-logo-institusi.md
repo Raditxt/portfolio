@@ -8,19 +8,24 @@ Tidak ada logo di Project, Skill, Kontak, atau di Kamar 3D. Logo tidak mengganti
 
 ## Prasyarat
 L2 (`l2-konten-fase`) sudah di-merge. Empat file logo resmi, warna tidak diubah, SVG atau PNG transparan ≥160×160, disimpan di `public/logo/`:
-- [ ] Politeknik Negeri Ujung Pandang
-- [ ] SMK Telkom Makassar
-- [ ] Metrotech Digital Asia
-- [ ] Asah (bukan Dicoding; programnya Asah)
+- [x] Politeknik Negeri Ujung Pandang
+- [x] SMK Telkom Makassar
+- [x] Metrotech Digital Asia
+- [x] Asah (bukan Dicoding; programnya Asah)
 
 ## Kriteria selesai
-- [ ] Field `logo?: string` di `Pendidikan` dan `Peran` (`src/content/types.ts`)
-- [ ] Pendidikan: wadah lingkaran 40px berlatar silver (palet), logo `object-fit: contain`, padding ±6px
-- [ ] Pengalaman: wadah kotak membulat 40px (`--shape-sm`) berlatar silver di kiri atas card, judul dan organisasi di sebelahnya
-- [ ] Semua atau tidak sama sekali: item tanpa logo menampilkan inisial di wadah yang sama, jadi layout tidak loncat
-- [ ] `alt=""` (dekoratif, nama sudah tertulis), dimuat dengan `next/image`
-- [ ] Rapi di lebar 360px (patokan Sheet HP dan side sheet desktop) dan 1280px
-- [ ] Tes konten tetap lulus; baseline `daftar-chromium-win32.png` diperbarui dan dicek mata
+- [x] Field `logo?: string` di `Pendidikan` dan `Peran` (`src/content/types.ts`)
+- [x] Pendidikan: wadah lingkaran 40px berlatar silver (palet), logo `object-fit: contain`, padding ±6px
+- [x] Pengalaman: wadah kotak membulat 40px (`--shape-sm`) berlatar silver di kiri atas card, judul dan organisasi di sebelahnya
+- [x] Semua atau tidak sama sekali: item tanpa logo menampilkan inisial di wadah yang sama, jadi layout tidak loncat
+- [x] `alt=""` (dekoratif, nama sudah tertulis), dimuat dengan `next/image`
+- [x] Rapi di lebar 360px (patokan Sheet HP dan side sheet desktop) dan 1280px
+- [x] Tes konten tetap lulus; baseline `daftar-chromium-win32.png` diperbarui dan dicek mata
 
 ## Catatan
-Keputusan (claude.ai, 2026-11-11): logo untuk estetika, bukan kredibilitas (audiens global tidak mengenal logo institusi lokal). Latar silver menyeragamkan logo di background gelap tanpa mengubah warna logo. Ukuran 40px dipilih supaya tidak perlu breakpoint.
+Selesai 11 Nov, commit 7477b34, merge f0e65de. Kode dibuat di claude.ai sebagai patch.
+- `.logo` wajib `box-sizing: border-box`; tanpa itu wadah jadi ±52px karena padding 6px.
+- `LogoInstitusi.test.ts` mengecek setiap path logo di konten ada di `public/`: path salah tampil sebagai gambar rusak, bukan inisial.
+- Inisial melewati kata sambung ("Asah led by Dicoding" → "AD").
+- Logo Metrotech pakai versi obsidian, Asah hanya simbol; alternatif disimpan di luar repo.
+- Vitest 31/31, lint, typecheck, e2e 5/5 di Windows; deploy Vercel hijau.
