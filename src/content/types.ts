@@ -12,6 +12,8 @@ export type Pendidikan = {
   jurusan: string;
   periode: string;
   catatan?: string;
+  /** Path di `public/`, mis. "/logo/pnup.png". Tanpa logo → inisial. */
+  logo?: string;
 };
 
 export type Tentang = {
@@ -27,6 +29,8 @@ export type Peran = {
   periode: string;
   lokasi: string;
   deskripsi: string;
+  /** Path di `public/`, mis. "/logo/asah.png". Tanpa logo → inisial. */
+  logo?: string;
 };
 
 export type Pengalaman = {

@@ -12,6 +12,7 @@ export const pengalaman: Pengalaman = {
       lokasi: "Remote",
       deskripsi:
         "Intensive program covering machine learning, deep learning, and AI application development.",
+      logo: "/logo/asah.png",
     },
     {
       peran: "Junior Web Developer (Intern)",
@@ -20,6 +21,7 @@ export const pengalaman: Pengalaman = {
       lokasi: "Makassar",
       deskripsi:
         "Built responsive pages and components for the company blog with React and Tailwind CSS.",
+      logo: "/logo/metrotech.png",
     },
   ],
 };

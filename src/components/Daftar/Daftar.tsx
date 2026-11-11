@@ -1,13 +1,10 @@
 import { profil, sections, type Section } from "@/content";
 import { Ikon } from "./Ikon";
+import { LogoInstitusi } from "./LogoInstitusi";
 import { TombolSalin } from "./TombolSalin";
 import s from "./Daftar.module.css";
 
 const LABEL_STATUS = { "in-use": "In daily use", "in-development": "In development" } as const;
-
-function tahun(periode: string) {
-  return periode.match(/\d{4}/g) ?? [];
-}
 
 function Chips({ item, mono }: { item: string[]; mono?: boolean }) {
   return (
@@ -30,11 +27,7 @@ function IsiSection({ section }: { section: Section }) {
           <div className={s.list}>
             {section.pendidikan.map((p) => (
               <div key={p.sekolah} className={s.li}>
-                <span className={`${s.lead} ${s.leadText}`}>
-                  {tahun(p.periode).map((t, i) => (
-                    <span key={i}>{t}</span>
-                  ))}
-                </span>
+                <LogoInstitusi nama={p.sekolah} logo={p.logo} bentuk="bulat" />
                 <div className={s.txt}>
                   <span className="title-small">{p.sekolah}</span>
                   <span className="body-medium muted">
@@ -51,11 +44,16 @@ function IsiSection({ section }: { section: Section }) {
         <div className={s.stack}>
           {section.daftar.map((p) => (
             <div key={p.peran} className={s.card}>
+              <div className={s.cardKepala}>
+                <LogoInstitusi nama={p.organisasi} logo={p.logo} bentuk="kotak" />
+                <div className={s.txt}>
+                  <h3 className="title-medium">{p.peran}</h3>
+                  <p className="label-large">{p.organisasi}</p>
+                </div>
+              </div>
               <span className="label-medium muted">
                 {p.periode} · {p.lokasi}
               </span>
-              <h3 className="title-medium">{p.peran}</h3>
-              <p className="label-large">{p.organisasi}</p>
               <p className="body-medium muted">{p.deskripsi}</p>
             </div>
           ))}

@@ -39,13 +39,19 @@
 .card { background: var(--md-surface-container); border: 1px solid var(--md-outline-variant); border-radius: var(--shape-md); padding: 16px; display: grid; gap: 10px; min-width: 0; }
 .card p { margin: 0; }
 .cardTop { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.cardKepala { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.cardKepala h3 { margin: 0; }
 .cardActions { display: flex; gap: 4px; margin-left: -12px; flex-wrap: wrap; }
 
 .list { display: grid; }
 .li { display: flex; align-items: center; gap: 16px; min-height: 56px; padding: 10px 0; border-top: 1px solid var(--md-outline-variant); }
 .li:first-child { border-top: 0; }
-.lead { width: 40px; height: 40px; border-radius: 50%; background: var(--md-secondary-container); color: var(--md-on-secondary-container); display: grid; place-items: center; flex: none; }
-.leadText { font: 500 11.5px/14px var(--mono); text-align: center; align-content: center; }
+/* Logo institusi (issue 11): latar silver menyeragamkan logo di tema gelap
+   tanpa mengubah warnanya. Inisial dipakai kalau logo tidak ada. */
+.logo { box-sizing: border-box; width: 40px; height: 40px; padding: 6px; background: var(--silver); color: var(--obsidian); display: grid; place-items: center; flex: none; font: 600 13px/1 var(--mono); letter-spacing: .5px; }
+.logo img { width: 100%; height: 100%; object-fit: contain; }
+.logoBulat { border-radius: 50%; }
+.logoKotak { border-radius: var(--shape-sm); }
 .txt { flex: 1; min-width: 0; display: grid; gap: 2px; }
 .li code { font: 500 13px/20px var(--mono); color: var(--md-on-surface); user-select: all; overflow-wrap: anywhere; }
 
