@@ -23,6 +23,7 @@ L2 (`l2-konten-fase`) sudah di-merge. Empat file logo resmi, warna tidak diubah,
 - [x] Tes konten tetap lulus; baseline `daftar-chromium-win32.png` diperbarui dan dicek mata
 
 ## Catatan
+Keputusan: logo untuk estetika, bukan kredibilitas (audiens global tidak mengenal logo institusi lokal). Latar silver menyeragamkan logo di background gelap tanpa mengubah warna logo. Ukuran 40px dipilih supaya tidak perlu breakpoint.
 Selesai 11 Nov, commit 7477b34, merge f0e65de. Kode dibuat di claude.ai sebagai patch.
 - `.logo` wajib `box-sizing: border-box`; tanpa itu wadah jadi ±52px karena padding 6px.
 - `LogoInstitusi.test.ts` mengecek setiap path logo di konten ada di `public/`: path salah tampil sebagai gambar rusak, bukan inisial.
