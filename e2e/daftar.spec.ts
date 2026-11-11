@@ -24,3 +24,15 @@ test("Daftar sama dengan screenshot acuan", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveScreenshot("daftar.png", { fullPage: true });
 });
+
+test("URL versi daftar /list tetap menampilkan daftar (kontrak lamaran)", async ({ page }) => {
+  const res = await page.goto("/list");
+  expect(res?.status()).toBe(200);
+  await expect(page.locator("#daftar section h2")).toHaveText([
+    "About",
+    "Experience",
+    "Projects",
+    "Skills",
+    "Contact",
+  ]);
+});
