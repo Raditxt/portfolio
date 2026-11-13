@@ -36,3 +36,8 @@ test("URL versi daftar /list tetap menampilkan daftar (kontrak lamaran)", async 
     "Contact",
   ]);
 });
+
+test("/list tidak menampilkan catatan fallback", async ({ page }) => {
+  await page.goto("/list");
+  await expect(page.getByText("can't display the 3D room")).toHaveCount(0);
+});

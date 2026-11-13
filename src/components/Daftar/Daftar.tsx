@@ -152,7 +152,7 @@ function IsiSection({ section }: { section: Section }) {
   }
 }
 
-export function Daftar() {
+export function Daftar({ catatan }: { catatan?: string }) {
   return (
     <main id="daftar" className={s.daftar}>
       <div className={s.isi}>
@@ -165,7 +165,7 @@ export function Daftar() {
             {profil.cv.label}
           </a>
         </div>
-        <p className={s.catatan}>{profil.catatanDaftar}</p>
+        {catatan && <p className={s.catatan}>{catatan}</p>}
         {sections.map((section) => (
           <section key={section.id} id={section.id}>
             <h2 className={`label-large ${s.judul}`}>{section.judul}</h2>
