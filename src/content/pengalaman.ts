@@ -20,7 +20,7 @@ export const pengalaman: Pengalaman = {
       periode: "Mar – Jun 2022",
       lokasi: "Makassar",
       deskripsi:
-        "Built responsive pages and components for the company blog with React and Tailwind CSS.",
+        "Built the front-end of a news blog for others.ts, an Instagram media brand started by our intern team, using React.",
       logo: "/logo/metrotech.png",
     },
   ],
