@@ -46,18 +46,24 @@ Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
 
 **Kondisi ukur:** battery saver mati, kecerahan normal, suhu HP normal (tidak panas, tidak sedang mengisi daya berat). Laptop dan HP di Wi-Fi yang sama, `npx next start -H 0.0.0.0 -p 3100`.
 
-**Tabel ukur** (diisi Raditya):
+**Tabel ukur** (Fase Sore, via LAN):
 
 | Perangkat (model + browser) | Kondisi | FPS median | Sumber |
 |---|---|---|---|
-| HP kelas menengah: … | prototipe penuh | | fisik |
-| HP kelas menengah: … | prototipe `?shadow=0` | | fisik |
-| HP kelas menengah: … | `/spike` | | fisik |
-| Laptop: … | prototipe penuh | | fisik |
-| Laptop: … | `/spike` | | fisik |
-| Tablet: … | prototipe penuh | | fisik |
+| Tablet Android `<model>`, Chrome | prototipe penuh | 58.7 / 61.1 (dua ukuran) | fisik |
+| Tablet Android `<model>`, Chrome | prototipe `?shadow=0` | 58.4 | fisik |
+| Tablet Android `<model>`, Chrome | `/spike` | 74.4 | fisik |
+| HP `<model>`, `<browser>` | prototipe penuh | belum diukur | fisik |
+| Desktop | `/spike` | 36.9 (ukur pertama; diduga artefak 10 detik pertama) | fisik |
 | Fold (terlipat dan terbuka) | prototipe penuh, `/spike` | emulasi, layout saja, tanpa FPS | emulasi |
 | Flip (layar luar dan dalam) | prototipe penuh, `/spike` | emulasi, layout saja, tanpa FPS | emulasi |
+
+**Keputusan G1: LOLOS** (ambang 30), diputuskan Raditya. Tidak ada rencana B, tidak ada ADR 0004. Di tablet, `/spike` lebih tinggi dari prototipe, jadi overhead R3F tidak terlihat. Catatan: ambang di atas menyebut HP kelas menengah, sedangkan baris HP masih kosong. Keputusan ini bersandar pada angka tablet.
+
+**Temuan untuk issue 05:**
+1. Cahaya harus dikalibrasi ulang untuk three 0.187. Angka intensitas prototipe (r128, cahaya legacy) tidak bisa disalin begitu saja.
+2. `PCFSoftShadowMap` sudah dihapus di three 0.187. Tipe shadow perlu diputuskan.
+3. Tablet potret: kamar dan label di tepi terpotong. Frustum potret (×1.18) perlu diperlebar.
 
 **Belum pasti:**
 - **Versi three berbeda.** Prototipe r128 vs spike 0.187. three 0.187 sudah menghapus `PCFSoftShadowMap` (console: "Using PCFShadowMap instead"), jadi shadow di `/spike` adalah PCF, bukan PCF soft. Pengelolaan warna dan satuan intensitas cahaya juga berubah sejak r155. Dengan angka yang sama, `/spike` tampak jauh lebih gelap dan berwarna lain. Issue 05 perlu menghitung ulang intensitas, bukan sekadar menyalin.
