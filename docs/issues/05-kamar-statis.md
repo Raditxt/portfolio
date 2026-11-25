@@ -93,3 +93,22 @@ Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
 **Belum beres:**
 - Baseline screenshot `*-chromium-win32.png` di-commit (keputusan Lead). Baseline Linux dibuat saat CI ada.
 - three 0.187 masih mencetak peringatan `THREE.Clock` deprecated dari R3F (sudah tercatat di G1).
+
+### Handoff 05a → 05b (2026-11-25)
+
+**Status:** 05a selesai di branch `feat/05a-kamar` (belum di-merge). `npm test` (36), `npm run e2e` (11), lint, dan typecheck lulus. Dua dari tiga kriteria tercentang; "mirip prototipe" ditunda ke 05b (alasan di atas).
+
+**Preview Vercel:** https://portfolio-nqa498jz8-radityas-projects-0ae5d960.vercel.app/kamar (dilindungi Vercel Authentication, login dulu). Inspector: https://vercel.com/radityas-projects-0ae5d960/portfolio/F4kSphREVMcgQyn89y1fossi7wHu
+
+**File kunci:**
+- `src/kamar/kamera.ts`: `HOME`, `OFFSET_KAMERA`, `frustumIso` (logika murni, dites di `kamera.test.ts`).
+- `src/kamar/cahaya.ts`: `intensitasR128`, `jarakR128`, `DECAY_R128`. Semua cahaya baru wajib lewat sini.
+- `src/kamar/palet.ts`: `PAL` dan `rng` prototipe.
+- `src/components/Kamar/Kamar.tsx`: Canvas (`legacy`, ACES 1.05, PCF), kamera, OrbitControls, cahaya Sore, sinyal `data-kamar-siap`.
+- `src/components/Kamar/{Shell,Jendela,PetaEkspedisi,Laptop,HP,RakGrimoire}.tsx`, `bentuk.tsx` (`Kotak`, `Silinder`), `tekstur.ts`.
+- `src/app/kamar/page.tsx`: route noindex.
+- `e2e/kamar.spec.ts` dan baseline `kamar-{desktop,hp}-chromium-win32.png`.
+
+**Keputusan yang mengikat 05b:** ADR 0004 (pipeline warna dan cahaya r128). Tidak ada mode tes di kode produksi; e2e menunggu pandangan diam lewat screenshot.
+
+**Lingkup 05b:** sisa Dekorasi (daftar di atas) termasuk meja, sehingga Laptop dan HP berhenti melayang. Lalu tuning lampu Dekorasi berdampingan dengan prototipe (beam mati, jam 16:00 WITA, reduced-motion), centang "mirip prototipe", dan perbarui baseline `kamar-*.png`.
