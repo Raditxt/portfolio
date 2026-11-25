@@ -8,6 +8,9 @@ _Hindari_: scene, level, page
 **Benda**: objek di Kamar yang bisa diklik untuk membuka satu Section (Jendela, Peta ekspedisi, Laptop, Rak grimoire, HP).
 _Hindari_: object, hotspot (hotspot adalah label Benda, bukan Benda itu sendiri)
 
+**Dekorasi**: objek di Kamar yang tidak bisa diklik dan tidak membuka Section (panji, rak pedang, kasur, lingkaran sihir, dan sejenisnya).
+_Hindari_: prop, ornamen, Benda (Benda selalu bisa diklik)
+
 **Label**: tanda kecil yang melayang di atas Benda dan bisa diklik.
 
 **Section**: satu bagian isi portfolio: Tentang, Pengalaman, Project, Skill, Kontak.
