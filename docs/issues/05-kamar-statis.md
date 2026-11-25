@@ -7,9 +7,9 @@ Kamar, dinding, lantai, dan semua Benda dengan kamera ortografis isometrik seper
 Belum ada klik, animasi, atau Karakter.
 
 ## Kriteria selesai
-- [ ] Koordinat dan warna diambil dari prototipe
-- [ ] Screenshot desktop dan HP mirip prototipe saat Fase Sore
-- [ ] Kamera bisa diputar dalam batas yang sama dengan prototipe
+- [x] Koordinat dan warna diambil dari prototipe
+- [ ] Screenshot desktop dan HP mirip prototipe saat Fase Sore (ditunda ke 05b, lihat Catatan sesi F2 s2)
+- [x] Kamera bisa diputar dalam batas yang sama dengan prototipe
 
 ## Catatan
 Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
@@ -72,3 +72,43 @@ Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
 - **Fase prototipe mengikuti jam WITA.** Fase mengubah posisi sun dan lampu yang menyala, jadi ukur di Fase yang sama untuk ketiga ulangan dan catat Fase-nya.
 - **Mengukur di Fold dan Flip.** Belum ada perangkat fisik. Emulasi DevTools hanya membuktikan layout.
 - R3F memakai `THREE.Clock` yang deprecated di 0.187 (hanya peringatan).
+
+### Sesi F2 s2 (2026-11-25): 05a
+
+**Keputusan grilling:**
+1. Kamar ada di route sementara `/kamar` (`robots: noindex, nofollow`) dan tidak ditautkan. `/` tetap Daftar sampai issue 10.
+2. Pipeline warna dan cahaya: ADR 0004 (`<Canvas legacy>` + ACES/sRGB, ×π, `decay 0`/`distance ×0.459`, PCF).
+3. Beam jendela (beam, patch, spot) milik issue 08. Screenshot pembanding prototipe diambil dengan beam dimatikan.
+4. `frustumIso` dihitung kontinu dari aspect. Tinggi minimal `VIEW` 11.5 (landscape sama dengan prototipe) dan melebar sampai kiri-kanan bbox shell Kamar muat (setengah lebar 7.354). Pojok atas dinding dan pojok depan lantai tetap terpotong di landscape, sama seperti prototipe.
+5. "Dekorasi" masuk glosarium.
+6. Seam: Vitest `frustumIso` (16:9, 1:1, 0.9, 0.46, 0.38). Playwright memakai sinyal `data-kamar-siap`, screenshot desktop 1280×720 dan Pixel 7 dengan `maxDiffPixelRatio` 0.01, plus satu smoke drag di `/kamar`. Mode tes `?tes=1` dihapus karena e2e berjalan di build produksi; tes clamp menunggu sampai pandangan berhenti (dua screenshot identik) dengan damping tetap menyala. Tes clamp terbukti gagal saat batas azimuth dibuang.
+7. Sore memakai `PHASE_ENV.sore` setelah override baris 891: sun 1.0, bukan 1.6.
+
+**Hasil pembanding (desktop, titik yang tidak terpengaruh lampu Dekorasi):** dinding kiri 25 vs 27, lantai kiri depan 155 vs 162 (rata-rata R, Kamar vs prototipe). Bingkai jendela, rangka laptop, dan sisi rak lebih gelap dari prototipe karena sconce, lentera, dan tongkat kristal belum ada. Tuning setelah konversi ditunda sampai lampu itu ada (05b).
+
+**Kenapa "mirip prototipe" belum dicentang:** prototipe Sore diterangi juga oleh lentera, sconce, lampu tumbler, tongkat kristal, dan lingkaran sihir, yang semuanya Dekorasi. Tanpa lampu itu, Benda di dekatnya lebih gelap dari prototipe, dan tuning sekarang hanya akan diulang di 05b. Geometri dan framing kamera sudah sama.
+
+**Sisa untuk 05b (Dekorasi):** meja dan laci, kursi, lentera dan cahayanya, jam pasir, cangkir, panji, rak pedang dan perisai, jubah, tongkat kristal dan cahayanya, tong dan peti, pot herba, kasur dan selimut, lingkaran sihir dan cahayanya, sconce dan lampu tumbler dan cahayanya, motes dalam pose diam. Setelah itu tuning cahaya via screenshot dan buat ulang baseline `kamar-*.png`. Laptop dan HP sementara melayang karena mejanya ada di 05b.
+
+**Belum beres:**
+- Baseline screenshot `*-chromium-win32.png` di-commit (keputusan Lead). Baseline Linux dibuat saat CI ada.
+- three 0.187 masih mencetak peringatan `THREE.Clock` deprecated dari R3F (sudah tercatat di G1).
+
+### Handoff 05a → 05b (2026-11-25)
+
+**Status:** 05a selesai di branch `feat/05a-kamar` (belum di-merge). `npm test` (36), `npm run e2e` (11), lint, dan typecheck lulus. Dua dari tiga kriteria tercentang; "mirip prototipe" ditunda ke 05b (alasan di atas).
+
+**Preview Vercel:** https://portfolio-nqa498jz8-radityas-projects-0ae5d960.vercel.app/kamar (dilindungi Vercel Authentication, login dulu). Inspector: https://vercel.com/radityas-projects-0ae5d960/portfolio/F4kSphREVMcgQyn89y1fossi7wHu
+
+**File kunci:**
+- `src/kamar/kamera.ts`: `HOME`, `OFFSET_KAMERA`, `frustumIso` (logika murni, dites di `kamera.test.ts`).
+- `src/kamar/cahaya.ts`: `intensitasR128`, `jarakR128`, `DECAY_R128`. Semua cahaya baru wajib lewat sini.
+- `src/kamar/palet.ts`: `PAL` dan `rng` prototipe.
+- `src/components/Kamar/Kamar.tsx`: Canvas (`legacy`, ACES 1.05, PCF), kamera, OrbitControls, cahaya Sore, sinyal `data-kamar-siap`.
+- `src/components/Kamar/{Shell,Jendela,PetaEkspedisi,Laptop,HP,RakGrimoire}.tsx`, `bentuk.tsx` (`Kotak`, `Silinder`), `tekstur.ts`.
+- `src/app/kamar/page.tsx`: route noindex.
+- `e2e/kamar.spec.ts` dan baseline `kamar-{desktop,hp}-chromium-win32.png`.
+
+**Keputusan yang mengikat 05b:** ADR 0004 (pipeline warna dan cahaya r128). Tidak ada mode tes di kode produksi; e2e menunggu pandangan diam lewat screenshot.
+
+**Lingkup 05b:** sisa Dekorasi (daftar di atas) termasuk meja, sehingga Laptop dan HP berhenti melayang. Lalu tuning lampu Dekorasi berdampingan dengan prototipe (beam mati, jam 16:00 WITA, reduced-motion), centang "mirip prototipe", dan perbarui baseline `kamar-*.png`.
