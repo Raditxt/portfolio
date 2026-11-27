@@ -2,7 +2,7 @@
 
 // Kamar statis (issue 05a): shell, lima Benda, kamera isometrik, cahaya Fase Sore.
 // Angka dari docs/prototype/kamar-raditya.html; pipeline warna dan cahaya: ADR 0004.
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Stats } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useLayoutEffect, useRef, useState } from "react";
 import { ACESFilmicToneMapping, type OrthographicCamera } from "three";
@@ -108,6 +108,8 @@ export default function Kamar() {
         <RakGrimoire />
         <TandaSiap siap={() => setSiap(true)} />
       </Canvas>
+      {/* Pengukur FPS HP (issue 05b), hanya di preview Vercel. */}
+      {process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" && <Stats />}
     </div>
   );
 }
