@@ -156,3 +156,49 @@ Gate FPS lolos (keputusan Raditya). Kemungkinan variasi pengukuran manual; angka
 - Selisih lain yang masih ada: lantai kiri depan −9, dinding kanan dekat lentera +5..+8. HP: framing lebih lebar dari prototipe (keputusan 05a #4, disengaja). Tidak ada di prototipe Kamar (di luar scope): Karakter, motes (Ditunda), beam jendela (issue 08), label/HUD (issue 06).
 
 **Ditunda (sesi F2 s3):** pemanasan langkah 7, dipotong lebih dulu untuk menjaga jatah konteks: (a) `.gitattributes eol=lf`; (b) tes batas putar memakai `expect.poll`/`toPass` sebagai ganti menunggu dua screenshot sama. Motes dan FPS HP juga Ditunda (lihat di atas). PR: https://github.com/Raditxt/portfolio/pull/2
+
+### Handoff 05b → berikutnya (2026-11-27)
+
+**Status:** 05b selesai di branch `feat/05b-dekorasi`, PR https://github.com/Raditxt/portfolio/pull/2 (OPEN, belum di-merge). Ketiga kriteria issue 05 tercentang. `npm test` (36), `npm run e2e` (11), lint, dan typecheck lulus di `32959c1`. Commit sesudahnya hanya mengubah dokumen.
+
+**Ringkasan 05b:**
+- Meja dan Kursi; Laptop dan HP berdiri di atas meja.
+- Dekorasi pose diam: panji, rak pedang dan perisai, tongkat kristal, jubah, lentera, jam pasir, cangkir, tong dan peti, pot herba, lingkaran sihir, lampu dinding, lampu tumbler, kasur.
+- 8 point light Dekorasi baru, semuanya tanpa shadow.
+- Hex di luar PAL dikumpulkan di `WARNA_DEKORASI`.
+- Stats hanya muncul di preview, dimuat lewat `next/dynamic` dengan deep import drei.
+- Angka lampu dan alasan tuning: addendum `docs/adr/0004-pipeline-warna-cahaya-r128.md`. Pembanding cahaya dan checklist: "Sesi F2 s3" di atas.
+
+**FPS tablet** (Xiaomi Pad 7 90 Hz, Chrome 158, Sore, median / min):
+- Sebelum lampu: 80 / 59.
+- Sesudah lampu: 90 / 60.
+
+Kenaikan ini anomali. Kemungkinan besar variasi pengukuran manual, dan angka sesudah lampu mentok di refresh rate 90 Hz. Tidak ada perubahan yang meringankan render. Jangan disimpulkan lampu tidak berbiaya; ukuran yang berarti butuh perangkat yang tidak mentok di refresh rate (HP kelas menengah).
+
+**Ditunda:**
+- Motes (pose diam).
+- FPS HP kelas menengah, sebelum dan sesudah lampu: belum ada perangkat, dan baris HP di tabel G1 masih kosong.
+- Langkah 7: `.gitattributes eol=lf`, dan tes batas putar memakai `expect.poll`/`toPass`.
+
+**Temuan code-review** (rinciannya di body PR #2, bagian Merge Danger; tidak ada yang memblokir):
+- Duplikasi bahan, karena `Bahan` di `bentuk.tsx` tidak diekspor.
+- Angka tuning lampu tersebar di lima komponen.
+- `FAIRY_SORE` ada di komponen, padahal issue 08 akan butuh nilai Fase dari luar.
+- Nama `WARNA_DEKORASI` juga memuat warna Benda (Laptop).
+- Sisa 05a: hex di `Kamar.tsx` dan `tekstur.ts`, dan `RakGrimoire` belum memakai `LampuTitik`.
+
+**Langkah berikutnya (Raditya):**
+1. Review screenshot berdampingan Kamar dan prototipe (Sore, beam mati, desktop 1280×720 dan Pixel 7). Putuskan apakah selisih sisi rak (+14/−10) dan lantai kiri depan (−9) masih "mirip". Gambar dari sesi ini ada di scratchpad lokal sesi dan bisa hilang. Untuk membuat ulang, ikuti metode di "Sesi F2 s3": salin prototipe, set `beamOp` 0 dan `spot` 0, jalankan Playwright dengan `reducedMotion: reduce` dan jam 16:00 WITA.
+2. Merge PR #2. Merge ke main = deploy produksi.
+3. Cek produksi:
+   - `/list` dan `/` (Daftar) tidak berubah.
+   - `/kamar` tampil dengan Dekorasi dan lampu.
+   - Panel Stats **tidak** muncul.
+   - `robots` masih `noindex, nofollow`.
+
+**Skill yang disarankan untuk sesi berikutnya:**
+- `andrej-karpathy-skills:karpathy-guidelines`: sepanjang sesi.
+- `mattpocock-skills:code-review`: kalau ada perubahan sebelum merge.
+- `vercel:deployments-cicd` atau `vercel:status`: memantau deploy produksi setelah merge.
+- `mattpocock-skills:diagnosing-bugs`: hanya kalau `/kamar` di produksi glitch atau FPS jatuh.
+- `mattpocock-skills:tdd`: kalau temuan `FAIRY_SORE` dibawa ke issue 08 sebagai logika Fase murni.
