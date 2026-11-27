@@ -1,6 +1,6 @@
 // Dekorasi tongkat kristal bersandar di pojok kiri. Pose diam: kristal tidak berputar.
 import { PAL, WARNA_DEKORASI } from "@/kamar/palet";
-import { Silinder } from "./bentuk";
+import { LampuTitik, Silinder } from "./bentuk";
 
 /** [x, y, z, radius, skala y] dari prototipe. */
 const KRISTAL = [
@@ -21,6 +21,8 @@ export function TongkatKristal() {
           <meshBasicMaterial color={WARNA_DEKORASI.kristal} />
         </mesh>
       ))}
+      {/* Di-tune (ADR 0004, addendum 05b): prototipe d 3. */}
+      <LampuTitik warna={PAL.violet} intensitas={0.7} jarak={4.5} position={[0, 3.8, 0]} />
     </group>
   );
 }

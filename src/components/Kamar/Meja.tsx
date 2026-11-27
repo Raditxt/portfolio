@@ -1,7 +1,7 @@
 // Dekorasi meja: papan, empat kaki, laci dengan pegangan emas, lentera, jam pasir, cangkir.
 // Laptop dan HP berdiri di atasnya (y=2.39). Pose diam: api dan pasir tidak bergerak.
 import { PAL, WARNA_DEKORASI } from "@/kamar/palet";
-import { Kotak, Silinder } from "./bentuk";
+import { Kotak, LampuTitik, Silinder } from "./bentuk";
 
 const BESI = { metalness: 0.6 };
 const TIANG_LENTERA: [number, number][] = [
@@ -42,6 +42,8 @@ export function Meja() {
           <meshStandardMaterial color={PAL.iron} flatShading roughness={0.85} metalness={0.6} />
         </mesh>
       </group>
+      {/* Lentera. Di-tune (ADR 0004, addendum 05b): prototipe 1.8 / d 7. */}
+      <LampuTitik warna={WARNA_DEKORASI.cahayaApi} intensitas={1.5} jarak={9} position={[3.15, 2.8, -4.2]} />
       <group position={[2.15, 2.39, -4.55]}>
         <Silinder atas={0.17} bawah={0.17} tinggi={0.04} warna={PAL.woodD} position={[0, 0.02, 0]} />
         <Silinder atas={0.17} bawah={0.17} tinggi={0.04} warna={PAL.woodD} position={[0, 0.5, 0]} />

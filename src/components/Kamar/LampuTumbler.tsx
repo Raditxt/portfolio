@@ -5,8 +5,17 @@ import { useMemo } from "react";
 import { Color } from "three";
 import type { V3 } from "@/kamar/kamera";
 import { WARNA_DEKORASI } from "@/kamar/palet";
+import { LampuTitik } from "./bentuk";
 
-const CAMPUR_SORE = Math.min(1, 0.7 / 1.4) * 0.85;
+const FAIRY_SORE = 0.7;
+const CAMPUR_SORE = Math.min(1, FAIRY_SORE / 1.4) * 0.85;
+
+/** Tiga fairyLights prototipe, intensitas fairy·0.55. Jarak di-tune 7 → 10 (ADR 0004, addendum 05b). */
+const CAHAYA: V3[] = [
+  [-2.4, 4.5, -4.3],
+  [2.4, 4.5, -4.3],
+  [-4.3, 4.5, 1.5],
+];
 
 function letakBohlam(): V3[] {
   const hasil: V3[] = [];
@@ -34,6 +43,9 @@ export function LampuTumbler() {
           <sphereGeometry args={[0.06, 6, 6]} />
           <meshBasicMaterial color={warna} />
         </mesh>
+      ))}
+      {CAHAYA.map((p) => (
+        <LampuTitik key={p.join()} warna={WARNA_DEKORASI.bohlamNyala} intensitas={FAIRY_SORE * 0.55} jarak={10} position={p} />
       ))}
     </group>
   );
