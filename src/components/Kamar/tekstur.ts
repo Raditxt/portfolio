@@ -1,5 +1,5 @@
 // Tekstur kanvas disalin dari docs/prototype/kamar-raditya.html (stoneTex, windowTex,
-// codeTex, phoneTex, tekstur peta). Semua isian datar, tanpa gradasi.
+// codeTex, phoneTex, tekstur peta, panji, perisai, lingkaran sihir). Semua isian datar, tanpa gradasi.
 import { CanvasTexture, RepeatWrapping, SRGBColorSpace } from "three";
 import { PAL, rng } from "@/kamar/palet";
 
@@ -244,5 +244,107 @@ export function teksturPeta(): CanvasTexture {
       g.lineTo(-7, 0);
       g.fill();
     }
+  });
+}
+
+/** Path lambang R (`LOGO_R` prototipe), kotak 240×240. */
+const LOGO_R = "M84.9 71.8 C83.9 69.2 77.5 60.8 78.6 56.6 C79.8 52.5 88.1 46.1 91.8 47.0 C95.5 47.9 101.9 52.0 100.8 62.1 C99.8 72.2 91.8 90.8 85.3 107.6 C78.9 124.3 68.9 147.7 62.2 162.6 C55.5 177.5 44.9 198.4 45.0 197.0 C45.1 195.6 55.7 170.4 62.7 154.3 C69.6 138.3 78.2 116.0 86.8 100.7 C95.5 85.3 104.2 70.9 114.6 62.1 C125.0 53.4 139.4 48.4 149.3 48.4 C159.1 48.4 171.3 54.6 173.8 62.1 C176.2 69.7 171.2 85.3 164.1 93.8 C156.9 102.3 142.4 108.9 130.9 113.1 C119.5 117.2 101.6 118.1 95.3 118.6 C89.0 119.0 89.7 112.6 93.2 115.8 C96.6 119.0 107.9 128.9 115.8 137.8 C123.7 146.8 132.9 161.2 140.5 169.5 C148.1 177.7 155.1 183.7 161.4 187.4 C167.7 191.0 172.7 192.0 178.3 191.5 C183.9 191.0 192.2 185.8 195.0 184.6";
+
+function crestR(g: CanvasRenderingContext2D, cx: number, cy: number, size: number, color: string, lw = 14) {
+  g.save();
+  g.translate(cx - size / 2, cy - size / 2);
+  g.scale(size / 240, size / 240);
+  g.strokeStyle = color;
+  g.lineWidth = lw;
+  g.lineCap = "round";
+  g.lineJoin = "round";
+  g.stroke(new Path2D(LOGO_R));
+  g.restore();
+}
+
+export function teksturPanji(): CanvasTexture {
+  return canvasTex(256, 512, (g, w, h) => {
+    g.beginPath();
+    g.moveTo(0, 0);
+    g.lineTo(w, 0);
+    g.lineTo(w, h);
+    g.lineTo(w / 2, h - 70);
+    g.lineTo(0, h);
+    g.closePath();
+    g.fillStyle = PAL.olive;
+    g.fill();
+    g.strokeStyle = PAL.gold;
+    g.lineWidth = 12;
+    g.stroke();
+    crestR(g, w / 2, 200, 180, PAL.gold, 16);
+  });
+}
+
+export function teksturPerisai(): CanvasTexture {
+  return canvasTex(256, 256, (g, w) => {
+    g.fillStyle = PAL.crimson;
+    g.fillRect(0, 0, w, w);
+    g.strokeStyle = PAL.silver;
+    g.lineWidth = 10;
+    g.beginPath();
+    g.arc(w / 2, w / 2, 104, 0, 7);
+    g.stroke();
+    crestR(g, w / 2, w / 2, 160, PAL.silver, 16);
+  });
+}
+
+/** Urutan panggilan rng(7) disalin persis dari prototipe supaya rune sama. */
+export function teksturLingkaranSihir(): CanvasTexture {
+  return canvasTex(1024, 1024, (g, w) => {
+    g.translate(w / 2, w / 2);
+    g.strokeStyle = PAL.gold;
+    const ring = (rad: number, lw: number) => {
+      g.lineWidth = lw;
+      g.beginPath();
+      g.arc(0, 0, rad, 0, Math.PI * 2);
+      g.stroke();
+    };
+    ring(490, 7);
+    ring(466, 3);
+    ring(360, 5);
+    ring(338, 2);
+    ring(150, 4);
+    const rr = rng(7);
+    for (let i = 0; i < 64; i++) {
+      g.save();
+      g.rotate((i / 64) * Math.PI * 2);
+      g.translate(0, -414);
+      g.lineWidth = 3.5;
+      g.beginPath();
+      const t = Math.floor(rr() * 4);
+      if (t === 0) {
+        g.moveTo(-8, -14);
+        g.lineTo(0, 14);
+        g.lineTo(8, -14);
+      } else if (t === 1) {
+        g.moveTo(-10, 0);
+        g.lineTo(10, 0);
+        g.moveTo(0, -14);
+        g.lineTo(0, 14);
+      } else if (t === 2) {
+        g.arc(0, 0, 10, 0, Math.PI * 1.5);
+      } else {
+        g.moveTo(-9, -12);
+        g.lineTo(9, -12);
+        g.lineTo(-9, 12);
+        g.lineTo(9, 12);
+      }
+      g.stroke();
+      g.restore();
+    }
+    g.lineWidth = 4;
+    g.beginPath();
+    for (let i = 0; i <= 7; i++) {
+      const a = (((i * 3) % 7) / 7) * Math.PI * 2 - Math.PI / 2;
+      if (i) g.lineTo(Math.cos(a) * 338, Math.sin(a) * 338);
+      else g.moveTo(Math.cos(a) * 338, Math.sin(a) * 338);
+    }
+    g.stroke();
+    crestR(g, 0, 0, 250, PAL.gold, 13);
   });
 }

@@ -1,6 +1,6 @@
 "use client";
 
-// Kamar statis (issue 05a): shell, lima Benda, kamera isometrik, cahaya Fase Sore.
+// Kamar statis (issue 05a/05b): shell, lima Benda, Dekorasi, kamera isometrik, cahaya Fase Sore.
 // Angka dari docs/prototype/kamar-raditya.html; pipeline warna dan cahaya: ADR 0004.
 // Deep import: barrel drei tidak ter-tree-shake dan menyeret stats.js ke bundle production.
 import { OrbitControls } from "@react-three/drei/core/OrbitControls";
@@ -13,10 +13,22 @@ import { frustumIso, HOME, OFFSET_KAMERA } from "@/kamar/kamera";
 import { PAL } from "@/kamar/palet";
 import { HP } from "./HP";
 import { Jendela } from "./Jendela";
+import { Jubah } from "./Jubah";
+import { Kasur } from "./Kasur";
+import { Kursi } from "./Kursi";
+import { LampuDinding } from "./LampuDinding";
+import { LampuTumbler } from "./LampuTumbler";
 import { Laptop } from "./Laptop";
+import { LingkaranSihir } from "./LingkaranSihir";
+import { Meja } from "./Meja";
+import { Panji } from "./Panji";
 import { PetaEkspedisi } from "./PetaEkspedisi";
+import { PotHerba } from "./PotHerba";
 import { RakGrimoire } from "./RakGrimoire";
+import { RakPedang } from "./RakPedang";
 import { Shell } from "./Shell";
+import { TongkatKristal } from "./TongkatKristal";
+import { TongPeti } from "./TongPeti";
 
 /**
  * Pengukur FPS (issue 05b), hanya di preview Vercel. Di build lain kondisinya
@@ -114,9 +126,21 @@ export default function Kamar() {
         <Shell />
         <Jendela />
         <PetaEkspedisi />
+        <Meja />
+        <Kursi />
         <Laptop />
         <HP />
         <RakGrimoire />
+        <Panji />
+        <RakPedang />
+        <Jubah />
+        <TongkatKristal />
+        <TongPeti />
+        <PotHerba />
+        <LingkaranSihir />
+        <LampuDinding />
+        <LampuTumbler />
+        <Kasur />
         <TandaSiap siap={() => setSiap(true)} />
       </Canvas>
       {StatsPreview && <StatsPreview />}

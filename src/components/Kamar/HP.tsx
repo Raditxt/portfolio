@@ -1,4 +1,4 @@
-// Benda HP → Kontak. Tergeletak di meja (meja milik Dekorasi, 05b).
+// Benda HP → Kontak. Tergeletak di atas Meja (permukaan y=2.39).
 import { useMemo } from "react";
 import { PAL } from "@/kamar/palet";
 import { Kotak } from "./bentuk";

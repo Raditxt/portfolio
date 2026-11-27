@@ -29,3 +29,19 @@ export function rng(seed: number): () => number {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+
+/**
+ * Hex mentah dari prototipe yang tidak ada di `PAL` (ADR 0004, addendum 05b).
+ * Komponen Kamar tidak menulis hex sendiri; warna di luar PAL dinamai di sini.
+ */
+export const WARNA_DEKORASI = {
+  logamLaptop: "#B9BCC4",
+  api: "#FFC46A",
+  cahayaApi: "#FFB46B",
+  kristal: "#A98BD6",
+  bilahPedang: "#CDD2D8",
+  kacaJamPasir: "#CFE3E8",
+  bantal: "#D8D2C6",
+  bohlamNyala: "#FFD38A",
+  bohlamMati: "#5A4A2A",
+} as const;
