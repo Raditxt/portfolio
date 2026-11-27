@@ -8,7 +8,7 @@ Belum ada klik, animasi, atau Karakter.
 
 ## Kriteria selesai
 - [x] Koordinat dan warna diambil dari prototipe
-- [ ] Screenshot desktop dan HP mirip prototipe saat Fase Sore (ditunda ke 05b, lihat Catatan sesi F2 s2)
+- [x] Screenshot desktop dan HP mirip prototipe saat Fase Sore (05b, lihat Catatan sesi F2 s3)
 - [x] Kamera bisa diputar dalam batas yang sama dengan prototipe
 
 ## Catatan
@@ -55,6 +55,7 @@ Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
 | Tablet Android `<model>`, Chrome | `/spike` | 74.4 | fisik |
 | HP kelas menengah | — | belum diukur: belum ada perangkat HP kelas menengah | — |
 | Tablet Xiaomi Pad 7 (90 Hz), Chrome 158 | `/kamar` 05b sebelum lampu Dekorasi, preview Vercel | 80 (min 59) | fisik, sesi F2 s3 |
+| Tablet Xiaomi Pad 7 (90 Hz), Chrome 158 | `/kamar` 05b sesudah lampu Dekorasi (`0e03fc7`), preview Vercel | 90 (min 60), mentok di refresh rate | fisik, sesi F2 s3 |
 | Desktop | `/spike` | 36.9 (ukur pertama; diduga artefak 10 detik pertama) | fisik |
 | Fold (terlipat dan terbuka) | prototipe penuh, `/spike` | emulasi, layout saja, tanpa FPS | emulasi |
 | Flip (layar luar dan dalam) | prototipe penuh, `/spike` | emulasi, layout saja, tanpa FPS | emulasi |
@@ -128,3 +129,28 @@ Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
 | **Median / min** | **80** | **59** |
 
 **Ditunda:** FPS HP. Belum ada perangkat HP kelas menengah, jadi angka di atas dari tablet, bukan HP.
+
+**FPS sesudah lampu Dekorasi** (commit `0e03fc7`, kondisi dan metrik sama dengan baseline):
+
+| Run | Median | Min |
+|---|---|---|
+| 1 | 90 | 60 |
+| 2 | 87 | 60 |
+| 3 | 90 | 60 |
+| **Median / min** | **90** | **60** |
+
+Gate FPS lolos (keputusan Raditya). Kemungkinan variasi pengukuran manual; angka sesudah lampu mentok di refresh rate 90 Hz. Ini tidak berarti lampu tidak berbiaya. Di antara commit baseline (`70d8c5a`) dan `0e03fc7` tidak ada perubahan yang meringankan render: DPR, shadow map, material, dan frameloop tidak disentuh. Yang berubah hanya Dekorasi (lebih banyak mesh), 8 point light baru, dan deep import drei (bundle lebih kecil, tidak memengaruhi render). Draw call per frame: 405 (prototipe 459), termasuk pass shadow.
+
+**Ditunda:** FPS HP sesudah lampu (alasan sama: belum ada perangkat HP kelas menengah).
+
+**Metode pembanding cahaya (dipakai untuk addendum ADR 0004):**
+- Kamar: build production (`next build` lalu `next start`, port 3200) atau `next dev` (port 3300) untuk iterasi tuning. Log server keduanya mencatat `Ready` dan `GET /kamar 200`. Exit 127 di log tugas muncul karena proses dihentikan paksa lewat `Stop-Process`, bukan karena server gagal jalan.
+- Prototipe: salinan `docs/prototype/kamar-raditya.html` dengan beam, patch, dan spot dimatikan (`beamOp` 0, `spot` 0 di Sore dan di `ENV` awal). File asli tidak diubah.
+- Playwright Chromium, 1280×720, `reducedMotion: reduce`, zona waktu Asia/Makassar, jam dipatok 16:00 WITA; screenshot 2,5 detik setelah `data-kamar-siap` (prototipe: 6 detik setelah load).
+- 15 titik piksel yang sama di kedua gambar (framing identik), rata-rata patch 9×9, selisih kanal R. Angka: tanpa lampu 348, lampu dengan angka prototipe apa adanya 135, sesudah tuning 80. Angka 80 direproduksi ulang di build production bersih `0e03fc7` (`NEXT_PUBLIC_VERCEL_ENV=production`), dan build itu tidak memuat chunk stats.js.
+
+**Nilai "mirip prototipe"** (Fase Sore, sudut kamera default, beam mati; desktop 1280×720 dan Pixel 7):
+- [x] Laptop dan HP di atas meja.
+- [x] Semua Dekorasi langkah 3 ada di posisi yang sama dengan prototipe: panji, rak pedang dan perisai, tongkat kristal, jubah, jam pasir, lentera, tong (dan peti), lingkaran sihir, grimoire, lampu dinding, lampu tumbler, kasur. Cangkir dan pot herba juga ada.
+- [x] Bingkai jendela, rangka laptop, dan sisi rak tidak lagi jelas lebih gelap. Selisih R (Kamar − prototipe): bingkai jendela −2, rangka laptop +5, alas laptop +6, sisi rak atas +14, sisi rak bawah −10 (sebelumnya −26). Sisa selisih rak berasal dari bentuk falloff (lihat ADR 0004), bukan cahaya yang hilang.
+- Selisih lain yang masih ada: lantai kiri depan −9, dinding kanan dekat lentera +5..+8. HP: framing lebih lebar dari prototipe (keputusan 05a #4, disengaja). Tidak ada di prototipe Kamar (di luar scope): Karakter, motes (Ditunda), beam jendela (issue 08), label/HUD (issue 06).
