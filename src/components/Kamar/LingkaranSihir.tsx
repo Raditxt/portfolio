@@ -5,7 +5,7 @@ import { PAL } from "@/kamar/palet";
 import { LampuTitik } from "./bentuk";
 import { teksturLingkaranSihir } from "./tekstur";
 
-export const PUSAT_LINGKARAN = [0.5, 0, 1.7] as const;
+const PUSAT_LINGKARAN = [0.5, 0, 1.7] as const;
 
 export function LingkaranSihir() {
   const garis = useMemo(() => teksturLingkaranSihir(), []);

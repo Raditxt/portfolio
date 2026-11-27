@@ -24,7 +24,7 @@ Prototipe (sumber angka) memakai three r128: warna hex masuk tanpa konversi, cah
 
 ## Addendum 05b (2026-11-27): lampu Dekorasi Fase Sore
 
-Semua point light memakai `LampuTitik` (`bentuk.tsx`): `intensitasR128`, `jarakR128`, `decay = 0` (`DECAY_R128`), **tanpa shadow**. Prototipe juga tidak memberi shadow ke point light mana pun. Shadow map tetap satu, milik sun (1024², PCF).
+Semua point light Dekorasi memakai `LampuTitik` (`bentuk.tsx`): `intensitasR128`, `jarakR128`, `decay = 0` (`DECAY_R128`), **tanpa shadow**. Lampu grimoire (05a) masih `<pointLight>` langsung di `RakGrimoire.tsx` dengan konversi yang sama. Prototipe juga tidak memberi shadow ke point light mana pun. Shadow map tetap satu, milik sun (1024², PCF).
 
 | Lampu | Jumlah | Warna | Intensitas r128 (prototipe → dipakai) | `d` r128 (prototipe → dipakai) | `distance` 0.187 | Shadow |
 |---|---|---|---|---|---|---|

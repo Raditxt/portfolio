@@ -4,7 +4,7 @@ import { PAL, WARNA_DEKORASI } from "@/kamar/palet";
 import { Kotak, LampuTitik, Silinder } from "./bentuk";
 
 /** [x, y, z, ox, oz] dari prototipe; (ox, oz) arah lengan menjauhi dinding. */
-export const SCONCE = [
+const SCONCE = [
   [0.25, 3.9, -4.88, 0, 0.18],
   [-4.88, 3.9, 1.85, 0.18, 0],
 ] as const;
