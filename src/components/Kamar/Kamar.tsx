@@ -2,8 +2,10 @@
 
 // Kamar statis (issue 05a): shell, lima Benda, kamera isometrik, cahaya Fase Sore.
 // Angka dari docs/prototype/kamar-raditya.html; pipeline warna dan cahaya: ADR 0004.
-import { OrbitControls, Stats } from "@react-three/drei";
+// Deep import: barrel drei tidak ter-tree-shake dan menyeret stats.js ke bundle production.
+import { OrbitControls } from "@react-three/drei/core/OrbitControls";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import dynamic from "next/dynamic";
 import { useLayoutEffect, useRef, useState } from "react";
 import { ACESFilmicToneMapping, type OrthographicCamera } from "three";
 import { intensitasR128 } from "@/kamar/cahaya";
@@ -15,6 +17,15 @@ import { Laptop } from "./Laptop";
 import { PetaEkspedisi } from "./PetaEkspedisi";
 import { RakGrimoire } from "./RakGrimoire";
 import { Shell } from "./Shell";
+
+/**
+ * Pengukur FPS (issue 05b), hanya di preview Vercel. Di build lain kondisinya
+ * konstan false, jadi import Stats terbuang dan tidak masuk bundle production.
+ */
+const StatsPreview =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
+    ? dynamic(() => import("@react-three/drei/core/Stats").then((m) => m.Stats), { ssr: false })
+    : null;
 
 /** `PHASE_ENV.sore` setelah override baris 891 prototipe. */
 const SORE = {
@@ -108,8 +119,7 @@ export default function Kamar() {
         <RakGrimoire />
         <TandaSiap siap={() => setSiap(true)} />
       </Canvas>
-      {/* Pengukur FPS HP (issue 05b), hanya di preview Vercel. */}
-      {process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" && <Stats />}
+      {StatsPreview && <StatsPreview />}
     </div>
   );
 }

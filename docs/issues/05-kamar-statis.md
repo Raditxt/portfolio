@@ -53,7 +53,8 @@ Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
 | Tablet Android `<model>`, Chrome | prototipe penuh | 58.7 / 61.1 (dua ukuran) | fisik |
 | Tablet Android `<model>`, Chrome | prototipe `?shadow=0` | 58.4 | fisik |
 | Tablet Android `<model>`, Chrome | `/spike` | 74.4 | fisik |
-| HP `<model>`, `<browser>` | prototipe penuh | belum diukur | fisik |
+| HP kelas menengah | — | belum diukur: belum ada perangkat HP kelas menengah | — |
+| Tablet Xiaomi Pad 7 (90 Hz), Chrome 158 | `/kamar` 05b sebelum lampu Dekorasi, preview Vercel | 80 (min 59) | fisik, sesi F2 s3 |
 | Desktop | `/spike` | 36.9 (ukur pertama; diduga artefak 10 detik pertama) | fisik |
 | Fold (terlipat dan terbuka) | prototipe penuh, `/spike` | emulasi, layout saja, tanpa FPS | emulasi |
 | Flip (layar luar dan dalam) | prototipe penuh, `/spike` | emulasi, layout saja, tanpa FPS | emulasi |
@@ -112,3 +113,18 @@ Isi saat grilling: keputusan, asumsi, dan seam yang disepakati.
 **Keputusan yang mengikat 05b:** ADR 0004 (pipeline warna dan cahaya r128). Tidak ada mode tes di kode produksi; e2e menunggu pandangan diam lewat screenshot.
 
 **Lingkup 05b:** sisa Dekorasi (daftar di atas) termasuk meja, sehingga Laptop dan HP berhenti melayang. Lalu tuning lampu Dekorasi berdampingan dengan prototipe (beam mati, jam 16:00 WITA, reduced-motion), centang "mirip prototipe", dan perbarui baseline `kamar-*.png`.
+
+### Sesi F2 s3 (2026-11-27): 05b
+
+**Alat ukur:** drei `<Stats>` di `/kamar`, dimuat lewat `next/dynamic` (`ssr: false`) hanya kalau `NEXT_PUBLIC_VERCEL_ENV === "preview"`. Diverifikasi lewat build: dengan `=production` tidak ada chunk berisi stats.js; dengan `=preview` ada. `OrbitControls` dan `Stats` di-import dari `@react-three/drei/core/*` karena barrel drei tidak ter-tree-shake (sebelumnya stats.js ikut di chunk Kamar 1,10 MB; sekarang 0,91 MB).
+
+**FPS sebelum lampu Dekorasi** (Fase Sore, alias preview branch, tablet Xiaomi Pad 7 90 Hz, Chrome 158; metrik G1: 10 detik sambil memutar kamera):
+
+| Run | Median | Min |
+|---|---|---|
+| 1 | 80 | 59 |
+| 2 | 81 | 59 |
+| 3 | 77 | 60 |
+| **Median / min** | **80** | **59** |
+
+**Ditunda:** FPS HP. Belum ada perangkat HP kelas menengah, jadi angka di atas dari tablet, bukan HP.
