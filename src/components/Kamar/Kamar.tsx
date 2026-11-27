@@ -1,9 +1,11 @@
 "use client";
 
-// Kamar statis (issue 05a): shell, lima Benda, kamera isometrik, cahaya Fase Sore.
+// Kamar statis (issue 05a/05b): shell, lima Benda, Dekorasi, kamera isometrik, cahaya Fase Sore.
 // Angka dari docs/prototype/kamar-raditya.html; pipeline warna dan cahaya: ADR 0004.
-import { OrbitControls } from "@react-three/drei";
+// Deep import: barrel drei tidak ter-tree-shake dan menyeret stats.js ke bundle production.
+import { OrbitControls } from "@react-three/drei/core/OrbitControls";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import dynamic from "next/dynamic";
 import { useLayoutEffect, useRef, useState } from "react";
 import { ACESFilmicToneMapping, type OrthographicCamera } from "three";
 import { intensitasR128 } from "@/kamar/cahaya";
@@ -11,10 +13,31 @@ import { frustumIso, HOME, OFFSET_KAMERA } from "@/kamar/kamera";
 import { PAL } from "@/kamar/palet";
 import { HP } from "./HP";
 import { Jendela } from "./Jendela";
+import { Jubah } from "./Jubah";
+import { Kasur } from "./Kasur";
+import { Kursi } from "./Kursi";
+import { LampuDinding } from "./LampuDinding";
+import { LampuTumbler } from "./LampuTumbler";
 import { Laptop } from "./Laptop";
+import { LingkaranSihir } from "./LingkaranSihir";
+import { Meja } from "./Meja";
+import { Panji } from "./Panji";
 import { PetaEkspedisi } from "./PetaEkspedisi";
+import { PotHerba } from "./PotHerba";
 import { RakGrimoire } from "./RakGrimoire";
+import { RakPedang } from "./RakPedang";
 import { Shell } from "./Shell";
+import { TongkatKristal } from "./TongkatKristal";
+import { TongPeti } from "./TongPeti";
+
+/**
+ * Pengukur FPS (issue 05b), hanya di preview Vercel. Di build lain kondisinya
+ * konstan false, jadi import Stats terbuang dan tidak masuk bundle production.
+ */
+const StatsPreview =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
+    ? dynamic(() => import("@react-three/drei/core/Stats").then((m) => m.Stats), { ssr: false })
+    : null;
 
 /** `PHASE_ENV.sore` setelah override baris 891 prototipe. */
 const SORE = {
@@ -103,11 +126,24 @@ export default function Kamar() {
         <Shell />
         <Jendela />
         <PetaEkspedisi />
+        <Meja />
+        <Kursi />
         <Laptop />
         <HP />
         <RakGrimoire />
+        <Panji />
+        <RakPedang />
+        <Jubah />
+        <TongkatKristal />
+        <TongPeti />
+        <PotHerba />
+        <LingkaranSihir />
+        <LampuDinding />
+        <LampuTumbler />
+        <Kasur />
         <TandaSiap siap={() => setSiap(true)} />
       </Canvas>
+      {StatsPreview && <StatsPreview />}
     </div>
   );
 }

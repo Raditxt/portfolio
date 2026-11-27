@@ -1,6 +1,7 @@
 // Padanan box() dan cyl() di prototipe: flatShading, roughness 0.85, metalness 0,
 // cast dan receive shadow.
 import type { ReactNode } from "react";
+import { DECAY_R128, intensitasR128, jarakR128 } from "@/kamar/cahaya";
 import type { V3 } from "@/kamar/kamera";
 
 export type OpsiBahan = { metalness?: number; roughness?: number };
@@ -35,5 +36,18 @@ export function Silinder({
       <cylinderGeometry args={[atas, bawah, tinggi, segmen]} />
       <Bahan warna={warna} opsi={opsi} />
     </mesh>
+  );
+}
+
+/** Padanan light() prototipe: point light tanpa shadow, angka r128 dikonversi (ADR 0004). */
+export function LampuTitik({ warna, intensitas, jarak, position }: { warna: string; intensitas: number; jarak: number; position: V3 }) {
+  return (
+    <pointLight
+      color={warna}
+      intensity={intensitasR128(intensitas)}
+      distance={jarakR128(jarak)}
+      decay={DECAY_R128}
+      position={position}
+    />
   );
 }
